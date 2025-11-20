@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Mi Perfil - DescuentoGas{% endblock %}
+
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+    <h1 style="margin-bottom: 2rem;">Mi Perfil</h1>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" style="margin: 0;">Información Personal</h2>
+        </div>
+        <div class="card-body">
+            <div style="display: grid; gap: 1.5rem;">
+                <div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Nombre Completo</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ user.first_name }} {{ user.last_name }}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Correo Electrónico</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ user.email }}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Usuario</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ user.username }}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Rol</p>
+                            <p style="margin: 0.5rem 0 0 0;">
+                                {% for grupo in user.groups.all %}
+                                    <span class="badge badge-primary">{{ grupo.name }}</span>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'cambiar_password_propia' %}" class="btn btn-primary">Cambiar Contraseña</a>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top: 1.5rem;">
+        <div class="card-header">
+            <h2 class="card-title" style="margin: 0;">Acceso Rápido</h2>
+        </div>
+        <div class="card-body">
+            <div style="display: grid; gap: 0.75rem;">
+                {% if user.groups.all.0.name == 'Administrador' %}
+                    <a href="{% url 'administrar_solicitudes' %}" class="btn btn-outline" style="width: 100%; justify-content: flex-start;">
+                        📋 Administrar Solicitudes
+                    </a>
+                    <a href="{% url 'listar_usuarios' %}" class="btn btn-outline" style="width: 100%; justify-content: flex-start;">
+                        👥 Gestión de Usuarios
+                    </a>
+                {% elif user.groups.all.0.name == 'Vendedor' %}
+                    <a href="{% url 'buscar_solicitud_vendedor' %}" class="btn btn-outline" style="width: 100%; justify-content: flex-start;">
+                        🔍 Buscar Solicitud
+                    </a>
+                {% endif %}
+                <a href="/" class="btn btn-outline" style="width: 100%; justify-content: flex-start;">
+                    🏠 Ir a Inicio
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
