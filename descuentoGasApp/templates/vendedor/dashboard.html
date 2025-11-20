@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard Vendedor - DescuentoGas{% endblock %}
+
+{% block content %}
+<div class="hero" style="padding: 2rem 0;">
+    <h1 style="font-size: 2.25rem;">Panel de Vendedor</h1>
+    <p>Bienvenido, {{ user.first_name }}. Consulta solicitudes de descuento por RUT.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">🔍 Buscar Solicitud</h3>
+            <p style="color: var(--color-text-secondary); margin-top: 1rem; margin-bottom: 1.5rem;">
+                Consulta el estado de las solicitudes mediante el RUT del solicitante.
+            </p>
+            <a href="{% url 'buscar_solicitud_vendedor' %}" class="btn btn-primary">Ir a Búsqueda</a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">👤 Mi Perfil</h3>
+            <p style="color: var(--color-text-secondary); margin-top: 1rem; margin-bottom: 1.5rem;">
+                Visualiza y actualiza tu información personal y credenciales de acceso.
+            </p>
+            <a href="{% url 'perfil_usuario' %}" class="btn btn-outline">Ver Perfil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
