@@ -9,7 +9,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     
-    # Solicitudes (público)
+    # Solicitudes - todos los usuarios
     path('ingresar/', views.ingresar_solicitud, name='ingresar_solicitud'),
     
     # Vendedor
@@ -31,7 +31,7 @@ urlpatterns = [
     path('administrador/usuarios/reestablecer/<int:usuario_id>/', views.reestablecer_password, name='reestablecer_password'),
     path('administrador/usuarios/eliminar/<int:usuario_id>/', views.eliminar_usuario, name='eliminar_usuario'),
     
-    # Perfil (autenticados)
+    # Perfil - Usuario propio
     path('perfil/', views.perfil_usuario, name='perfil_usuario'),
     path('perfil/cambiar-password/', views.cambiar_password_propia, name='cambiar_password_propia'),
 ]

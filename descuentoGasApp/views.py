@@ -11,9 +11,7 @@ from .models import Solicitud
 from .forms import SolicitudForm, BuscarSolicitudForm, CrearUsuarioForm, ReestablecerPasswordForm
 from django.utils import timezone
 
-# ==========================================
 # FUNCIONES AUXILIARES
-# ==========================================
 
 def es_administrador(user):
     """Verifica si el usuario pertenece al grupo Administrador"""
@@ -31,16 +29,12 @@ def error_page(request, codigo_error="404", mensaje="Página no encontrada", det
         'detalle': detalle
     })
 
-# ==========================================
 # VISTAS PÚBLICAS
-# ==========================================
 
 def index(request):
-    """Página de inicio"""
     return render(request, 'index.html')
 
 def ingresar_solicitud(request):
-    """Permite a cualquier ciudadano ingresar una solicitud"""
     if request.method == 'POST':
         form = SolicitudForm(request.POST)
         if form.is_valid():
@@ -54,12 +48,9 @@ def ingresar_solicitud(request):
         form = SolicitudForm()
     return render(request, 'solicitudes/ingresar_solicitud.html', {'form': form})
 
-# ==========================================
 # AUTENTICACIÓN
-# ==========================================
 
 def login_view(request):
-    """Vista de inicio de sesión"""
     if request.user.is_authenticated:
         return redirect('index')
     
@@ -86,25 +77,20 @@ def login_view(request):
     return render(request, 'login/login.html')
 
 def logout_view(request):
-    """Cierra la sesión del usuario"""
     logout(request)
     messages.success(request, 'Sesión cerrada correctamente.')
     return redirect('index')
 
-# ==========================================
 # VENDEDOR
-# ==========================================
 
 @login_required
 @user_passes_test(es_vendedor, login_url='/')
 def dashboard_vendedor(request):
-    """Dashboard principal del vendedor"""
     return render(request, 'vendedor/dashboard.html')
 
 @login_required
 @user_passes_test(es_vendedor, login_url='/')
 def buscar_solicitud_vendedor(request):
-    """Permite al vendedor buscar solicitudes por RUT"""
     solicitudes = []
     if request.method == 'POST':
         form = BuscarSolicitudForm(request.POST)
@@ -117,21 +103,17 @@ def buscar_solicitud_vendedor(request):
         form = BuscarSolicitudForm()
     return render(request, 'vendedor/buscar_solicitud.html', {'form': form, 'solicitudes': solicitudes})
 
-# ==========================================
 # ADMINISTRADOR - SOLICITUDES
-# ==========================================
 
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def administrar_solicitudes(request):
-    """Lista todas las solicitudes"""
     solicitudes = Solicitud.objects.all().order_by('-fecha_solicitud')
     return render(request, 'administrador/solicitudes/listar.html', {'solicitudes': solicitudes})
 
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def detalle_solicitud(request, solicitud_id):
-    """Muestra los detalles de una solicitud"""
     try:
         solicitud = get_object_or_404(Solicitud, id=solicitud_id)
         return render(request, 'administrador/solicitudes/detalle.html', {'solicitud': solicitud})
@@ -145,14 +127,12 @@ def detalle_solicitud(request, solicitud_id):
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def cambiar_estado_page(request, solicitud_id):
-    """Formulario para cambiar el estado de una solicitud"""
     solicitud = get_object_or_404(Solicitud, id=solicitud_id)
     return render(request, 'administrador/solicitudes/cambiar_estado.html', {'solicitud': solicitud})
 
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def cambiar_estado(request, solicitud_id):
-    """Procesa el cambio de estado de una solicitud"""
     solicitud = get_object_or_404(Solicitud, id=solicitud_id)
     if request.method == 'POST':
         nuevo_estado = request.POST.get('estado')
@@ -171,7 +151,6 @@ def cambiar_estado(request, solicitud_id):
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def eliminar_solicitud(request, solicitud_id):
-    """Elimina una solicitud con confirmación"""
     try:
         solicitud = get_object_or_404(Solicitud, id=solicitud_id)
         if request.method == 'POST':
@@ -189,7 +168,6 @@ def eliminar_solicitud(request, solicitud_id):
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def eliminar_duplicados(request):
-    """Elimina solicitudes duplicadas por RUT, conservando la más antigua"""
     duplicados = Solicitud.objects.values('rut').annotate(cantidad=Count('id')).filter(cantidad__gt=1)
     total_eliminados = 0
     
@@ -210,21 +188,17 @@ def eliminar_duplicados(request):
     
     return redirect('administrar_solicitudes')
 
-# ==========================================
 # ADMINISTRADOR - USUARIOS
-# ==========================================
 
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def listar_usuarios(request):
-    """Lista todos los usuarios Administrador y Vendedor"""
     usuarios = User.objects.filter(groups__name__in=['Administrador', 'Vendedor']).distinct().order_by('first_name')
     return render(request, 'administrador/usuarios/listar.html', {'usuarios': usuarios})
 
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def crear_usuario(request):
-    """Crea un nuevo usuario Administrador o Vendedor"""
     if request.method == 'POST':
         form = CrearUsuarioForm(request.POST)
         if form.is_valid():
@@ -238,14 +212,12 @@ def crear_usuario(request):
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def detalle_usuario(request, usuario_id):
-    """Muestra los detalles de un usuario"""
     usuario = get_object_or_404(User, id=usuario_id)
     return render(request, 'administrador/usuarios/detalle.html', {'usuario': usuario})
 
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def reestablecer_password(request, usuario_id):
-    """Permite al administrador cambiar la contraseña de un usuario"""
     usuario = get_object_or_404(User, id=usuario_id)
     
     if request.method == 'POST':
@@ -267,7 +239,6 @@ def reestablecer_password(request, usuario_id):
 @login_required
 @user_passes_test(es_administrador, login_url='/')
 def eliminar_usuario(request, usuario_id):
-    """Elimina un usuario con confirmación"""
     usuario = get_object_or_404(User, id=usuario_id)
     
     # Evitar que el admin se elimine a sí mismo
@@ -283,18 +254,14 @@ def eliminar_usuario(request, usuario_id):
     
     return render(request, 'administrador/usuarios/eliminar_confirmacion.html', {'usuario': usuario})
 
-# ==========================================
 # PERFIL DE USUARIO (TODOS LOS AUTENTICADOS)
-# ==========================================
 
 @login_required
 def perfil_usuario(request):
-    """Muestra el perfil del usuario autenticado"""
     return render(request, 'perfil/ver_perfil.html', {'usuario': request.user})
 
 @login_required
 def cambiar_password_propia(request):
-    """Permite al usuario cambiar su propia contraseña"""
     if request.method == 'POST':
         form = ReestablecerPasswordForm(request.POST)
         if form.is_valid():

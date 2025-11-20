@@ -44,7 +44,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.WARNING('Grupo Vendedor ya existe'))
 
         # Crear usuario administrador inicial
-        email_admin = 'admin@descuentogas.cl'
+        email_admin = 'admin@mail.cl'
         if not User.objects.filter(username=email_admin).exists():
             admin_user = User.objects.create_user(
                 username=email_admin,

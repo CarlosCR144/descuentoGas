@@ -1,7 +1,3 @@
-/**
- * Script para manejar selección de región y comuna con autocompletado
- */
-
 // Datos de regiones y comunas
 const REGIONES_COMUNAS = {
     'Región de Arica y Parinacota': ['Arica', 'Camarones', 'General Lagos', 'Putre'],
