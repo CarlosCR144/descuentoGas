@@ -20,7 +20,7 @@ from descuentoGasApp.views import error_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('descuentogas/', include('descuentoGasApp.urls')),
+    path('', include('descuentoGasApp.urls')),  # Sin prefijo descuentogas/
 ]
 
 handler404 = lambda request, exception: error_page(request)
