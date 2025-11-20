@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle Solicitud - DescuentoGas{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <div style="margin-bottom: 1.5rem;">
+        <a href="{% url 'administrar_solicitudes' %}" style="color: var(--color-primary); text-decoration: none; font-size: 0.875rem;">
+            ← Volver a Solicitudes
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 class="card-title" style="margin: 0;">Detalle de Solicitud</h2>
+                <span class="badge estado-{{ solicitud.estado|lower }}" style="font-size: 0.875rem;">{{ solicitud.estado }}</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div style="display: grid; gap: 1.5rem;">
+                <div>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-text-primary);">Datos Personales</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">RUT</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ solicitud.rut }}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Nombre Completo</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ solicitud.nombre }} {{ solicitud.apellido_paterno }} {{ solicitud.apellido_materno }}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Teléfono</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ solicitud.telefono }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-text-primary);">Dirección</h3>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Dirección</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ solicitud.direccion }}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Comuna</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ solicitud.comuna }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-text-primary);">Información de Solicitud</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Fecha de Solicitud</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ solicitud.fecha_solicitud|date:"d/m/Y H:i" }}</p>
+                        </div>
+                        {% if solicitud.fecha_aceptacion %}
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Fecha de Aceptación</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ solicitud.fecha_aceptacion|date:"d/m/Y H:i" }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex gap-2">
+                <a href="{% url 'cambiar_estado_page' solicitud.id %}" class="btn btn-primary">Cambiar Estado</a>
+                <a href="{% url 'eliminar_solicitud' solicitud.id %}" class="btn btn-danger">Eliminar</a>
+                <a href="{% url 'administrar_solicitudes' %}" class="btn btn-outline">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
