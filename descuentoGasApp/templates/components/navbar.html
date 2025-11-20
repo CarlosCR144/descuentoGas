@@ -1,10 +1,18 @@
 {% load static %}
 <nav class="navbar">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
+        <div class="navbar-container">
             <a class="navbar-brand" href="/">DescuentoGas</a>
             
-            <ul class="navbar-nav d-flex gap-2" style="list-style: none; margin: 0;">
+            <!-- Botón hamburguesa (solo visible en móvil) -->
+            <button class="navbar-toggle" id="navbarToggle" aria-label="Abrir menú">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Menú de navegación -->
+            <ul class="navbar-nav" id="navbarMenu">
                 <li><a class="nav-link" href="/">Inicio</a></li>
                 <li><a class="nav-link" href="{% url 'ingresar_solicitud' %}">Ingresar Solicitud</a></li>
                 
@@ -25,3 +33,38 @@
         </div>
     </div>
 </nav>
+
+<script>
+// Toggle del menú hamburguesa
+const navbarToggle = document.getElementById('navbarToggle');
+const navbarMenu = document.getElementById('navbarMenu');
+
+if (navbarToggle && navbarMenu) {
+    navbarToggle.addEventListener('click', function() {
+        navbarMenu.classList.toggle('active');
+        navbarToggle.classList.toggle('active');
+    });
+    
+    // Cerrar menú al hacer click en un enlace (en móvil)
+    const navLinks = navbarMenu.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                navbarMenu.classList.remove('active');
+                navbarToggle.classList.remove('active');
+            }
+        });
+    });
+    
+    // Cerrar menú al hacer click fuera (en móvil)
+    document.addEventListener('click', function(event) {
+        if (window.innerWidth <= 768) {
+            const isClickInside = navbarToggle.contains(event.target) || navbarMenu.contains(event.target);
+            if (!isClickInside && navbarMenu.classList.contains('active')) {
+                navbarMenu.classList.remove('active');
+                navbarToggle.classList.remove('active');
+            }
+        }
+    });
+}
+</script>
