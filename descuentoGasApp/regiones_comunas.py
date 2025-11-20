@@ -1,5 +1,3 @@
-"""Datos de regiones y comunas de Chile"""
-
 REGIONES_COMUNAS = {
     'Región de Arica y Parinacota': [
         'Arica', 'Camarones', 'General Lagos', 'Putre'
