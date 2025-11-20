@@ -2,21 +2,45 @@ from django import forms
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import Solicitud
+from .regiones_comunas import get_all_regiones, get_comunas_by_region, REGIONES_COMUNAS
 import re
 
 
 class SolicitudForm(forms.ModelForm):
+    # Campo adicional para región (no se guarda en BD)
+    region = forms.ChoiceField(
+        choices=[('', 'Seleccione una región')] + [(r, r) for r in get_all_regiones()],
+        required=False,
+        widget=forms.Select(attrs={
+            'class': 'form-control',
+            'id': 'id_region'
+        }),
+        label='Región'
+    )
+    
     class Meta:
         model = Solicitud
         fields = ['rut', 'nombre', 'apellido_paterno', 'apellido_materno', 'direccion', 'telefono', 'comuna']
         widgets = {
-            'rut': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '12.345.678-5'}),
+            'rut': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': '12.345.678-5'
+            }),
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'apellido_paterno': forms.TextInput(attrs={'class': 'form-control'}),
             'apellido_materno': forms.TextInput(attrs={'class': 'form-control'}),
             'direccion': forms.TextInput(attrs={'class': 'form-control'}),
-            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
-            'comuna': forms.TextInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '912345678 o +56912345678',
+                'pattern': '^(\+?56)?9\d{8}$',
+                'title': 'Formato: 9XXXXXXXX o +569XXXXXXXX'
+            }),
+            'comuna': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'id_comuna_input',
+                'placeholder': 'Escriba para buscar...'
+            }),
         }
 
     def clean_rut(self):
@@ -29,6 +53,27 @@ class SolicitudForm(forms.ModelForm):
                 raise forms.ValidationError('Formato de RUT inválido. Use solo números, puntos, guión y K.')
             return rut_clean
         return rut
+    
+    def clean_telefono(self):
+        telefono = self.cleaned_data.get('telefono', '')
+        if telefono:
+            # Limpiar espacios y guiones
+            telefono_clean = telefono.replace(' ', '').replace('-', '')
+            
+            # Validar formato chileno: 9XXXXXXXX o +569XXXXXXXX
+            if not re.match(r'^(\+?56)?9\d{8}$', telefono_clean):
+                raise forms.ValidationError(
+                    'Número de teléfono inválido. Use formato: 9XXXXXXXX o +569XXXXXXXX'
+                )
+            
+            # Normalizar al formato sin código de país para guardar
+            if telefono_clean.startswith('+56'):
+                telefono_clean = telefono_clean[3:]
+            elif telefono_clean.startswith('56'):
+                telefono_clean = telefono_clean[2:]
+            
+            return telefono_clean
+        return telefono
 
 
 class BuscarSolicitudForm(forms.Form):
