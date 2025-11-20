@@ -1,0 +1,25 @@
+# --- Python y Compilados ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Django ---
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# --- Entornos Virtuales (Ajusta según el nombre de tu carpeta) ---
+venv/
+env/
+.env/
+.venv/
+
+# --- Variables de Entorno y Seguridad (MUY IMPORTANTE) ---
+.env
+.DS_Store
+
+# --- IDEs (Opcional pero recomendado) ---
+.vscode/
+.idea/

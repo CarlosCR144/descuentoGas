@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error - DescuentoGas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h1 class="display-1 text-danger mb-4">{{ codigo_error|default:"Error" }}</h1>
+                        <h2 class="h4 mb-4">{{ mensaje|default:"Ha ocurrido un error" }}</h2>
+                        <p class="text-muted mb-4">{{ detalle|default:"Lo sentimos, algo salió mal." }}</p>
+                        <a href="{% url 'administrar_solicitudes' %}" class="btn btn-primary">Volver al inicio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+body {
+    padding-top: 1rem;
+}
+
+.form-error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.section-title {
+    margin-bottom: 1.5rem;
+}
+
+.table-responsive {
+    margin-bottom: 1rem;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+.alert {
+    margin-bottom: 1rem;
+}
