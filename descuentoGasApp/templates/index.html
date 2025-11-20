@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - DescuentoGas{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Bienvenido a DescuentoGas</h1>
+    <p>Sistema de gestión de solicitudes de descuento en cilindros de gas licuado para la Agrupación de Municipalidades de Chile</p>
+    
+    <div class="d-flex gap-3" style="justify-content: center; margin-top: 2rem;">
+        <a href="{% url 'ingresar_solicitud' %}" class="btn btn-primary btn-lg">Ingresar Solicitud</a>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'login' %}" class="btn btn-outline btn-lg">Iniciar Sesión</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">📋 Para Ciudadanos</h3>
+            <p style="color: var(--color-text-secondary); margin-top: 1rem;">
+                Ingresa tu solicitud de descuento de forma rápida y sencilla. Solo necesitas tu RUT y datos personales.
+            </p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">🔍 Para Vendedores</h3>
+            <p style="color: var(--color-text-secondary); margin-top: 1rem;">
+                Consulta el estado de las solicitudes mediante el RUT del solicitante de manera rápida.
+            </p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">⚙️ Para Administradores</h3>
+            <p style="color: var(--color-text-secondary); margin-top: 1rem;">
+                Gestiona todas las solicitudes y usuarios del sistema con herramientas completas de administración.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+<div class="card" style="margin-top: 3rem;">
+    <div class="card-header">
+        <h2 style="margin: 0;">Acceso Rápido</h2>
+    </div>
+    <div class="card-body">
+        <div class="d-flex gap-2">
+            {% if user.groups.all.0.name == 'Administrador' %}
+                <a href="{% url 'administrar_solicitudes' %}" class="btn btn-primary">Ver Solicitudes</a>
+                <a href="{% url 'listar_usuarios' %}" class="btn btn-secondary">Gestionar Usuarios</a>
+            {% elif user.groups.all.0.name == 'Vendedor' %}
+                <a href="{% url 'buscar_solicitud_vendedor' %}" class="btn btn-primary">Buscar Solicitud</a>
+            {% endif %}
+            <a href="{% url 'perfil_usuario' %}" class="btn btn-outline">Mi Perfil</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
