@@ -65,6 +65,6 @@ class Command(BaseCommand):
                 f'Usuario {email_admin} ya existe'
             ))
 
-        self.stdout.write(self.style.SUCCESS('\n=== Configuración completada ==="))
+        self.stdout.write(self.style.SUCCESS('\n=== Configuración completada ==='))
         self.stdout.write('Grupos creados: Administrador, Vendedor')
         self.stdout.write(f'Usuario admin: {email_admin} / admin123')
