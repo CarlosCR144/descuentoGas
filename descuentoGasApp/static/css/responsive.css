@@ -1,0 +1,178 @@
+/* ========================================
+   ESTILOS RESPONSIVE Y COMPONENTES ADICIONALES
+   ======================================== */
+
+/* Navbar Responsive */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+.hamburger-line {
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-text-primary);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    margin: 3px 0;
+}
+
+.navbar-toggle.active .hamburger-line:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.navbar-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-toggle.active .hamburger-line:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Sugerencias de Comuna */
+.comuna-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    box-shadow: var(--shadow-md);
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: var(--font-size-sm);
+}
+
+.suggestion-item:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.suggestion-item.no-results {
+    cursor: default;
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+.suggestion-item.no-results:hover {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+}
+
+/* Posicionamiento relativo para el contenedor del campo comuna */
+.form-group:has(#id_comuna_input) {
+    position: relative;
+}
+
+/* Responsive - Tablet y Móvil */
+@media (max-width: 768px) {
+    .navbar-toggle {
+        display: flex;
+    }
+    
+    .navbar-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background-color: var(--color-surface);
+        flex-direction: column;
+        padding: 5rem 0 2rem 0;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        overflow-y: auto;
+        gap: 0;
+    }
+    
+    .navbar-nav.active {
+        right: 0;
+    }
+    
+    .navbar-nav li {
+        width: 100%;
+    }
+    
+    .navbar-nav .nav-link {
+        display: block;
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border-radius: 0;
+        text-align: left;
+    }
+    
+    .navbar-nav .nav-link:hover {
+        background-color: var(--color-primary-light);
+    }
+    
+    /* Overlay para cerrar el menú */
+    .navbar-nav.active::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 280px;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+    }
+}
+
+/* Responsive - Móvil pequeño */
+@media (max-width: 480px) {
+    .navbar-nav {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .navbar-nav.active::before {
+        right: 0;
+    }
+    
+    .navbar-brand {
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* Mejoras para formularios en móvil */
+@media (max-width: 768px) {
+    .form-control {
+        font-size: 16px; /* Previene zoom en iOS */
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: var(--font-size-sm);
+    }
+}
