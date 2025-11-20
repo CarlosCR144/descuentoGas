@@ -51,18 +51,18 @@
             <div style="display: grid; gap: 0.75rem;">
                 {% if user.groups.all.0.name == 'Administrador' %}
                     <a href="{% url 'administrar_solicitudes' %}" class="btn btn-outline" style="width: 100%; justify-content: flex-start;">
-                        📋 Administrar Solicitudes
+                        Administrar Solicitudes
                     </a>
                     <a href="{% url 'listar_usuarios' %}" class="btn btn-outline" style="width: 100%; justify-content: flex-start;">
-                        👥 Gestión de Usuarios
+                        Gestión de Usuarios
                     </a>
                 {% elif user.groups.all.0.name == 'Vendedor' %}
                     <a href="{% url 'buscar_solicitud_vendedor' %}" class="btn btn-outline" style="width: 100%; justify-content: flex-start;">
-                        🔍 Buscar Solicitud
+                        Buscar Solicitud
                     </a>
                 {% endif %}
                 <a href="/" class="btn btn-outline" style="width: 100%; justify-content: flex-start;">
-                    🏠 Ir a Inicio
+                    Ir a Inicio
                 </a>
             </div>
         </div>
