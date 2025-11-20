@@ -31,12 +31,12 @@
                 <tbody>
                     {% for solicitud in solicitudes %}
                         <tr>
-                            <td>{{ solicitud.rut }}</td>
-                            <td>{{ solicitud.nombre }} {{ solicitud.apellido_paterno }} {{ solicitud.apellido_materno }}</td>
-                            <td>{{ solicitud.comuna }}</td>
-                            <td><span class="badge estado-{{ solicitud.estado|lower }}">{{ solicitud.estado }}</span></td>
-                            <td>{{ solicitud.fecha_solicitud|date:"d/m/Y" }}</td>
-                            <td>
+                            <td data-label="RUT">{{ solicitud.rut }}</td>
+                            <td data-label="Nombre Completo">{{ solicitud.nombre }} {{ solicitud.apellido_paterno }} {{ solicitud.apellido_materno }}</td>
+                            <td data-label="Comuna">{{ solicitud.comuna }}</td>
+                            <td data-label="Estado"><span class="badge estado-{{ solicitud.estado|lower }}">{{ solicitud.estado }}</span></td>
+                            <td data-label="Fecha Solicitud">{{ solicitud.fecha_solicitud|date:"d/m/Y" }}</td>
+                            <td data-label="Acciones">
                                 <div class="d-flex gap-2">
                                     <a href="{% url 'detalle_solicitud' solicitud.id %}" class="btn btn-sm btn-outline">Ver</a>
                                     <a href="{% url 'cambiar_estado_page' solicitud.id %}" class="btn btn-sm btn-secondary">Editar</a>

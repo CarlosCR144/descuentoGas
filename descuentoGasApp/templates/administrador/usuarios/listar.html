@@ -26,14 +26,14 @@
                 <tbody>
                     {% for usuario in usuarios %}
                         <tr>
-                            <td>{{ usuario.first_name }} {{ usuario.last_name }}</td>
-                            <td>{{ usuario.email }}</td>
-                            <td>
+                            <td data-label="Nombre">{{ usuario.first_name }} {{ usuario.last_name }}</td>
+                            <td data-label="Correo Electrónico">{{ usuario.email }}</td>
+                            <td data-label="Rol">
                                 {% for grupo in usuario.groups.all %}
                                     <span class="badge badge-primary">{{ grupo.name }}</span>
                                 {% endfor %}
                             </td>
-                            <td>
+                            <td data-label="Acciones">
                                 <div class="d-flex gap-2">
                                     <a href="{% url 'detalle_usuario' usuario.id %}" class="btn btn-sm btn-outline">Ver</a>
                                     <a href="{% url 'reestablecer_password' usuario.id %}" class="btn btn-sm btn-secondary">Cambiar Contraseña</a>
