@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle Usuario - DescuentoGas{% endblock %}
+
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+    <div style="margin-bottom: 1.5rem;">
+        <a href="{% url 'listar_usuarios' %}" style="color: var(--color-primary); text-decoration: none; font-size: 0.875rem;">
+            ← Volver a Usuarios
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" style="margin: 0;">Detalle del Usuario</h2>
+        </div>
+        <div class="card-body">
+            <div style="display: grid; gap: 1.5rem;">
+                <div>
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-text-primary);">Información Personal</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Nombre Completo</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ usuario.first_name }} {{ usuario.last_name }}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Correo Electrónico</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ usuario.email }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-text-primary);">Rol y Permisos</h3>
+                    <div>
+                        <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Rol Asignado</p>
+                        <p style="margin: 0.5rem 0 0 0;">
+                            {% for grupo in usuario.groups.all %}
+                                <span class="badge badge-primary">{{ grupo.name }}</span>
+                            {% empty %}
+                                <span style="color: var(--color-text-secondary);">Sin rol asignado</span>
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+                
+                <div style="border-top: 1px solid var(--color-border); padding-top: 1.5rem;">
+                    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--color-text-primary);">Información de Cuenta</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Usuario (Username)</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ usuario.username }}</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0;">Fecha de Creación</p>
+                            <p style="margin: 0.25rem 0 0 0;">{{ usuario.date_joined|date:"d/m/Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex gap-2">
+                <a href="{% url 'reestablecer_password' usuario.id %}" class="btn btn-primary">Cambiar Contraseña</a>
+                <a href="{% url 'eliminar_usuario' usuario.id %}" class="btn btn-danger">Eliminar Usuario</a>
+                <a href="{% url 'listar_usuarios' %}" class="btn btn-outline">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

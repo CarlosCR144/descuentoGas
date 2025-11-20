@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Usuario - DescuentoGas{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <div style="margin-bottom: 1.5rem;">
+        <a href="{% url 'listar_usuarios' %}" style="color: var(--color-primary); text-decoration: none; font-size: 0.875rem;">
+            ← Volver a Usuarios
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title" style="margin: 0; color: var(--color-error);">⚠️ Confirmar Eliminación</h2>
+        </div>
+        <div class="card-body">
+            <div style="background-color: var(--color-error-light); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--color-error); margin-bottom: 1.5rem;">
+                <p style="margin: 0; font-weight: 600;">Esta acción no se puede deshacer</p>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem; color: var(--color-text-secondary);">
+                    Se eliminará permanentemente el siguiente usuario:
+                </p>
+            </div>
+            
+            <div style="padding: 1rem; background-color: var(--color-border-light); border-radius: var(--radius-md);">
+                <p style="margin: 0;"><strong>Nombre:</strong> {{ usuario.first_name }} {{ usuario.last_name }}</p>
+                <p style="margin: 0.5rem 0 0 0;"><strong>Email:</strong> {{ usuario.email }}</p>
+                <p style="margin: 0.5rem 0 0 0;"><strong>Rol:</strong> 
+                    {% for grupo in usuario.groups.all %}
+                        <span class="badge badge-primary">{{ grupo.name }}</span>
+                    {% endfor %}
+                </p>
+            </div>
+            
+            <form method="post" style="margin-top: 1.5rem;">
+                {% csrf_token %}
+                <div style="display: flex; gap: 0.75rem;">
+                    <button type="submit" class="btn btn-danger">Sí, Eliminar</button>
+                    <a href="{% url 'listar_usuarios' %}" class="btn btn-outline">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
