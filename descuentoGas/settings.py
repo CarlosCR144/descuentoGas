@@ -39,9 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'descuentoGasApp',
+    
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -141,4 +146,47 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'success',
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
+}
+
+# Configuración de CORS
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
+
+# Permite enviar cookies y headers de autenticación
+CORS_ALLOW_CREDENTIALS = True
+
+# Configuración de Django REST Framework
+REST_FRAMEWORK = {
+    # Autenticación: usar JWT tokens
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # Para admin de Django
+    ],
+    
+    # Permisos por defecto: requiere autenticación
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    
+    # Formato de respuestas
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    
+    # Paginación (opcional pero recomendado)
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+# CONFIGURACIÓN DE JWT
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),      # Token expira en 1 hora
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),      # Refresh token expira en 7 días
+    'ROTATE_REFRESH_TOKENS': True,                    # Genera nuevo refresh al renovar
+    'BLACKLIST_AFTER_ROTATION': True,                 # Invalida token anterior
+    'AUTH_HEADER_TYPES': ('Bearer',),                 # Tipo de autenticación
 }
