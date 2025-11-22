@@ -20,6 +20,10 @@ from descuentoGasApp.views import error_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # ========================================
+    # API REST (para React)
+    # ========================================
+    path('api/', include('descuentoGasApp.api_urls')),
     path('', include('descuentoGasApp.urls')),  # Sin prefijo descuentogas/
 ]
 
