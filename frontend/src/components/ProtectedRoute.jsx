@@ -18,8 +18,8 @@ const ProtectedRoute = ({ children, requireAdmin = false, requireVendedor = fals
         return <Navigate to="/" replace />;
     }
 
-    // Si requiere ser vendedor y no lo es (ni admin)
-    if (requireVendedor && !isVendedor() && !isAdmin()) {
+    // Si requiere ser vendedor y no lo es
+    if (requireVendedor && !isVendedor()) {
         return <Navigate to="/" replace />;
     }
 
