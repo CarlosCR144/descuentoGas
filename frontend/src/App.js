@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import SolicitarDescuento from './pages/SolicitarDescuento';
 import BuscarSolicitud from './pages/BuscarSolicitud';
 import AdminSolicitudes from './pages/AdminSolicitudes';
+import AdminUsuarios from './pages/AdminUsuarios';
 
 import './App.css';
 
@@ -60,10 +61,7 @@ function App() {
                                 path="/admin/usuarios"
                                 element={
                                     <ProtectedRoute requireAdmin>
-                                        <div style={{ padding: '2rem', textAlign: 'center' }}>
-                                            <h2>Gestión de Usuarios - Admin</h2>
-                                            <p>Esta página se implementará próximamente</p>
-                                        </div>
+                                        <AdminUsuarios />
                                     </ProtectedRoute>
                                 }
                             />
