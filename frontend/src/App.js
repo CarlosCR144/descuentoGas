@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import SolicitarDescuento from './pages/SolicitarDescuento';
 import './App.css';
 
 // ========================================
@@ -21,6 +22,7 @@ function App() {
                             {/* Rutas públicas */}
                             <Route path="/" element={<Home />} />
                             <Route path="/login" element={<Login />} />
+                            <Route path="/solicitar" element={<SolicitarDescuento />} />
 
                             {/* Rutas protegidas - por ahora placeholder */}
                             <Route
