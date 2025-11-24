@@ -3,69 +3,86 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Home.css';
 
-// ========================================
-// PÁGINA DE INICIO
-// ========================================
 const Home = () => {
     const { isAuthenticated, user, isAdmin, isVendedor } = useAuth();
 
     return (
         <div className="home-container">
-            <div className="home-hero">
-                <h1>Bienvenido a DescuentoGas</h1>
-                <p>Sistema de gestión de solicitudes de descuento en gas</p>
-            </div>
-
             <div className="home-content">
-                {/* Usuario no autenticado */}
-                {!isAuthenticated && (
-                    <div className="home-section">
-                        <h2>¿Necesitas solicitar un descuento?</h2>
-                        <p>
-                            Completa el formulario de solicitud y te contactaremos a la brevedad.
-                        </p>
-                        <Link to="/solicitar" className="home-button">
-                            Solicitar Descuento
+                <div className="home-hero">
+                    <h1>Bienvenido a DescuentoGas</h1>
+                    <p>
+                        Sistema de gestión de solicitudes de descuento en cilindros de gas 
+                        licuado para la Agrupación de Municipalidades de Chile
+                    </p>
+                    
+                    <div className="home-hero-buttons">
+                        <Link to="/solicitar" className="home-button btn-lg">
+                            Ingresar Solicitud
                         </Link>
+                        {!isAuthenticated && (
+                            <Link to="/login" className="home-button btn-outline btn-lg">
+                                Iniciar Sesión
+                            </Link>
+                        )}
                     </div>
-                )}
+                </div>
 
-                {/* Usuario autenticado */}
+                <div className="home-grid">
+                    <div className="home-card">
+                        <h3>Para Ciudadanos</h3>
+                        <p>
+                            Ingresa tu solicitud de descuento de forma rápida y sencilla. 
+                            Solo necesitas tu RUT y datos personales.
+                        </p>
+                    </div>
+                    
+                    <div className="home-card">
+                        <h3>Para Vendedores</h3>
+                        <p>
+                            Consulta el estado de las solicitudes mediante el RUT del 
+                            solicitante de manera rápida.
+                        </p>
+                    </div>
+                    
+                    <div className="home-card">
+                        <h3>Para Administradores</h3>
+                        <p>
+                            Gestiona todas las solicitudes y usuarios del sistema con 
+                            herramientas completas de administración.
+                        </p>
+                    </div>
+                </div>
+
                 {isAuthenticated && (
-                    <div className="home-section">
-                        <h2>Hola, {user?.first_name || 'Usuario'}!</h2>
-                        
-                        {/* Vendedor */}
-                        {isVendedor() && (
-                            <div className="home-card">
-                                <h3>Panel de Vendedor</h3>
-                                <p>Busca y consulta solicitudes de descuento por RUT.</p>
-                                <Link to="/vendedor/buscar" className="home-button">
-                                    Buscar Solicitudes
+                    <div className="quick-access-card">
+                        <div className="quick-access-header">
+                            <h2>Acceso Rápido</h2>
+                        </div>
+                        <div className="quick-access-body">
+                            <div className="button-group">
+                                {isAdmin() && (
+                                    <>
+                                        <Link to="/admin/solicitudes" className="home-button">
+                                            Ver Solicitudes
+                                        </Link>
+                                        <Link to="/admin/usuarios" className="home-button btn-secondary">
+                                            Gestionar Usuarios
+                                        </Link>
+                                    </>
+                                )}
+                                
+                                {isVendedor() && (
+                                    <Link to="/vendedor/buscar" className="home-button">
+                                        Buscar Solicitud
+                                    </Link>
+                                )}
+                                
+                                <Link to="/perfil" className="home-button btn-outline">
+                                    Mi Perfil
                                 </Link>
                             </div>
-                        )}
-
-                        {/* Administrador */}
-                        {isAdmin() && (
-                            <>
-                                <div className="home-card">
-                                    <h3>Gestión de Solicitudes</h3>
-                                    <p>Administra todas las solicitudes del sistema.</p>
-                                    <Link to="/admin/solicitudes" className="home-button">
-                                        Ver Solicitudes
-                                    </Link>
-                                </div>
-
-                                <div className="home-card">
-                                    <h3>Gestión de Usuarios</h3>
-                                    <p>Administra vendedores y otros administradores.</p>
-                                    <Link to="/admin/usuarios" className="home-button">
-                                        Ver Usuarios
-                                    </Link>
-                                </div>
-                            </>
-                        )}
+                        </div>
                     </div>
                 )}
             </div>

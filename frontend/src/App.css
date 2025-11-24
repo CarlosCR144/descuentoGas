@@ -1,7 +1,6 @@
-/* ========================================
-   GLOBAL APP STYLES
-   ======================================== */
+@import './styles/variables.css';
 
+/* Reset y estilos base */
 * {
     margin: 0;
     padding: 0;
@@ -9,12 +8,13 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #f5f6fa;
 }
 
 .App {
@@ -25,11 +25,12 @@ body {
 
 .main-content {
     flex: 1;
-    padding-top: 1rem;
+    padding-top: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #2c3e50;
+    color: var(--color-text-primary);
+    font-weight: 600;
 }
 
 a {
@@ -39,4 +40,11 @@ a {
 
 button {
     font-family: inherit;
+}
+
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
 }

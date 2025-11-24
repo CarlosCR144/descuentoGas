@@ -1,96 +1,198 @@
 /* ========================================
-   HOME PAGE STYLES
+   HOME PAGE STYLES - Matching Django Design
    ======================================== */
 
 .home-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+    min-height: calc(100vh - 200px);
+    padding: var(--spacing-2xl) 0;
 }
 
 .home-hero {
     text-align: center;
-    padding: 3rem 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 8px;
-    margin-bottom: 2rem;
+    padding: var(--spacing-2xl) 0;
 }
 
 .home-hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
 }
 
 .home-hero p {
-    font-size: 1.2rem;
-    opacity: 0.9;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl) auto;
+    line-height: 1.6;
+}
+
+.home-hero-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-xl);
+    flex-wrap: wrap;
 }
 
 .home-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
 }
 
 .home-section {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: var(--color-surface);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
 }
 
 .home-section h2 {
-    color: #2c3e50;
-    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-2xl);
 }
 
 .home-card {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    border-left: 4px solid #3498db;
+    background: var(--color-surface);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-border);
+}
+
+.home-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .home-card h3 {
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-xl);
 }
 
 .home-card p {
-    color: #7f8c8d;
-    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
 }
 
 .home-button {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: #3498db;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    border-radius: var(--radius-md);
     border: none;
     cursor: pointer;
-    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    gap: var(--spacing-sm);
+    background-color: var(--color-primary);
+    color: white;
 }
 
 .home-button:hover {
-    background-color: #2980b9;
+    background-color: var(--color-primary-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.btn-lg {
+    padding: 0.875rem 1.75rem;
+    font-size: var(--font-size-base);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1.5px solid var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-border-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.quick-access-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-top: var(--spacing-2xl);
+}
+
+.quick-access-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+}
+
+.quick-access-header h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+}
+
+.quick-access-body {
+    padding: var(--spacing-lg);
+}
+
+.button-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    background-color: var(--color-border);
+    color: var(--color-text-primary);
+}
+
+.btn-secondary:hover {
+    background-color: #cbd5e1;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .home-hero h1 {
-        font-size: 2rem;
+        font-size: var(--font-size-3xl);
     }
 
     .home-hero p {
-        font-size: 1rem;
+        font-size: var(--font-size-base);
     }
 
     .home-container {
-        padding: 1rem;
+        padding: var(--spacing-lg) 0;
+    }
+
+    .home-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .home-hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .home-button,
+    .btn-lg {
+        width: 100%;
     }
 }
