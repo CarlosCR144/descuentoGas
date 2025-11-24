@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import SolicitarDescuento from './pages/SolicitarDescuento';
 import BuscarSolicitud from './pages/BuscarSolicitud';
+import AdminSolicitudes from './pages/AdminSolicitudes';
+
 import './App.css';
 
 function App() {
@@ -49,10 +51,7 @@ function App() {
                                 path="/admin/solicitudes"
                                 element={
                                     <ProtectedRoute requireAdmin>
-                                        <div style={{ padding: '2rem', textAlign: 'center' }}>
-                                            <h2>Gestión de Solicitudes - Admin</h2>
-                                            <p>Esta página se implementará próximamente</p>
-                                        </div>
+                                        <AdminSolicitudes />
                                     </ProtectedRoute>
                                 }
                             />
